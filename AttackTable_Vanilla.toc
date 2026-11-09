@@ -7,6 +7,7 @@
 ## AddonCompartmentFunc: AttackTable_OnAddonCompartmentClick
 ## X-License: GPL-3.0-or-later
 ## X-Website: https://github.com/malcyon/attacktable
+## X-Curse-Project-ID: 1794933
 ## SavedVariables: AttackTableDB
 
 Rules.lua

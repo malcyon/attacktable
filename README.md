@@ -22,7 +22,3 @@ Each game uses its own rules.
 ## Installing
 
 Copy the `.lua` and `.toc` files into `World of Warcraft/<game folder>/Interface/AddOns/AttackTable/`, then restart the game.
-
-## License
-
-GPL-3.0; see [LICENSE](LICENSE).

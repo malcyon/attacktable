@@ -2,7 +2,7 @@
 
 <p align="center"><img src="media/logo.png" alt="Attack Table logo" width="200"></p>
 
-A World of Warcraft addon that visualizes the melee and ranged attack table. It shows how much room is left for crits, and how much is pushed off the end when the table is full. I made this because I was curious how it works, and because I don't understand how people are just keeping this information in their heads.
+A World of Warcraft addon that visualizes the melee and ranged attack table. It shows misses, dodges, parries, glancing blows, blocks, critical hits, crushing blows, and regular hits. It also shows how much crit was pushed off the end of the table when your damage mitigation is high enough. I made this because I was curious how it works, and because it helps me understand it. 
 
 ![The Attack Table window, showing a monster's attacks on a character](media/screenshot.png)
 

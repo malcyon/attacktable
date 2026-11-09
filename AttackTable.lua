@@ -1,5 +1,5 @@
 -- The window: one colored bar in roll order, and the same numbers as a table
--- under it. /attacktable opens it. The plan is in PLAN.md.
+-- under it. /attacktable opens it. The research is in docs/attack-table.md.
 
 local _, ns = ...
 local Rules, Stats, Log = ns.Rules, ns.Stats, ns.Log
@@ -27,8 +27,8 @@ local ALL_KEYS = { "miss", "dodge", "parry", "glancing", "block", "crit", "crush
 local GOLD = { 1, 0.82, 0 }
 local EDITED = { 0.55, 0.8, 1 }
 
--- What moves each result, and how sure the numbers are (docs/attack-table.md
--- for your attacks; PLAN.md "Attacks on you" for the monster's).
+-- What moves each result. How sure each number is stays out of the window;
+-- docs/attack-table.md has the evidence.
 local NOTES = {
 	yours = {
 		miss = { "Changes with: your hit, weapon skill, target level, two weapons (white swings)." },
@@ -52,7 +52,7 @@ local NOTES = {
 		parry = { "Your parry chance from the character sheet, lowered for a higher monster. Only from the front." },
 		block = { "Your block chance from the character sheet (needs a shield), lowered for a higher monster. Only from the front." },
 		crit = { "Changes with: your defense, the monster's level. In Forever, none while the monster's skill is under 10 above your defense." },
-		crushing = { "150% damage. Only from monsters 3+ levels above you; defense cannot lower it, only push it off the end." },
+		crushing = { "150% damage. Only when the monster's skill is 15 or more above your defense; defense above your level x 5 does not lower it, but other results can push it off the end." },
 		hit = { "Whatever is left of the roll." },
 	},
 }

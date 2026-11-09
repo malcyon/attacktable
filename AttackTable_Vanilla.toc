@@ -1,10 +1,12 @@
 ## Interface: 11509
 ## Title: Attack Table
-## Notes: Draws your melee attack table as one colored bar, in the order the game rolls it. /attacktable
+## Notes: Draws the attack table as one colored bar in the order the game rolls it: your melee or ranged attacks, or a monster's attacks on you. /attacktable
 ## Author: Donald Morton
-## Version: 1.4.0
+## Version: @project-version@
 ## IconTexture: Interface\Icons\INV_Sword_04
 ## AddonCompartmentFunc: AttackTable_OnAddonCompartmentClick
+## X-License: GPL-3.0-or-later
+## X-Website: https://github.com/malcyon/attacktable
 ## SavedVariables: AttackTableDB
 
 Rules.lua

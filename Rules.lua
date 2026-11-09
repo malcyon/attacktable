@@ -37,7 +37,7 @@ Rules.BASE_CRIT = {
 }
 
 -- Agility for 1% crit at levels 10, 20, ... 60, from Forever's client table
--- (Datamined, docs/stats-and-ratings.md). Used only when the game cannot say.
+-- (Datamined, docs/attack-table.md). Used only when the game cannot say.
 Rules.AGILITY_PER_CRIT = {
 	WARRIOR = { 5.2, 7.8, 10.4, 13.2, 16.4, 20.0 },
 	PALADIN = { 5.8, 8.1, 10.7, 13.5, 16.5, 19.8 },

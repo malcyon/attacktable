@@ -1,0 +1,26 @@
+# Builds the addon zip and uploads it to CurseForge and GitHub Releases
+# whenever a version tag such as v1.4.0 is pushed.
+# Needs the repository secret CF_API_TOKEN (a CurseForge API token from
+# https://legacy.curseforge.com/account/api-tokens) and ## X-Curse-Project-ID
+# in AttackTable.toc.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: BigWigsMods/packager@v2

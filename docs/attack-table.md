@@ -125,7 +125,7 @@ Damage dealt = average of the two
 | 5 | 5% (measured 4.96%) | 5.5% | 5.5% |
 | 0 | 5% | 5.0% | 5.0% |
 
-**Forever:** Blizzard lists the glancing chance as correct at all levels, but the damage lost per glance as wrong against higher-level targets (**Blizzard**, [known issues](https://us.forums.blizzard.com/en/wow/t/2352687)). One Forever test measured about 24.6% lost per glance against +3 targets instead of 35% (**Measured**, [gunba CORE-001](https://github.com/gunba/wow-forever-sim/blob/forever/docs/uncertainties.md#core-001)). No fix had been announced as of the [November 6 hotfixes](https://news.blizzard.com/en-us/article/24315281/wow-forever-hotfixes-november-6-2026).
+**Forever:** Blizzard lists the glancing chance as correct at all levels, but the damage lost per glance as wrong against higher-level targets (**Blizzard**, [known issues](https://us.forums.blizzard.com/en/wow/t/2352687)). One Forever test measured about 24.6% lost per glance against +3 targets instead of 35% (**Measured**, [gunba CORE-001](https://github.com/gunba/wow-forever-sim/blob/forever/docs/uncertainties.md#core-001)). No fix had been announced as of the [November 6 hotfixes](https://news.blizzard.com/en-us/article/24315281/wow-forever-hotfixes-november-6-2026). In Forever the addon shows the game's own glancing chance and damage lost (see [How the addon reads your stats](#how-the-addon-reads-your-stats)); in Classic Era it uses the formulas above.
 
 ## Critical hits
 
@@ -362,14 +362,15 @@ From Blizzard's interface code in [Gethe/wow-ui-source](https://github.com/Gethe
 | Need | Forever | Classic Era |
 |---|---|---|
 | Weapon skill | `C_SkillInfo.GetSkillLineInfoByID` (rank and modifier) | `UnitAttackBothHands`, `UnitRangedAttack` |
-| Hit | `GetHitModifier`, `GetOffhandHitModifier`, `GetRangedHitModifier` | `GetHitModifier` |
+| Hit | `GetHitModifier`, `GetOffhandHitModifier`, `GetRangedHitModifier`, each plus hit rating from `GetCombatRatingBonus(CR_HIT_MELEE)` or `CR_HIT_RANGED`, as the character sheet adds them | `GetHitModifier` |
 | Crit | `GetCritChance`, `GetRangedCritChance` | Same |
-| Crit from Agility | `GetCritChanceFromStat(stat, value)` | Not confirmed; the Agility table is used otherwise |
-| Expertise | `GetExpertise` (main hand, off hand, ranged) | Exists |
+| Crit from Agility | `GetCritChanceFromStat(stat, value)`, a fraction the character sheet multiplies by 100 | Not confirmed; the Agility table is used otherwise |
+| Expertise | `GetExpertisePercent` (main hand, off hand, ranged) | Exists |
+| Glancing chance and damage lost | `GetGlancingBlowChance(skill, defense)` and `GetGlancingBlowPenalty(skill, defense)`, fractions; Blizzard's skills window reads them for a raid boss ([`Camelot/SkillsFrame.lua` L288-290](https://github.com/Gethe/wow-ui-source/blob/9dc84f0/Interface/AddOns/Blizzard_UIPanels_Game/Camelot/SkillsFrame.lua#L288-L290), build 70862) | None; the formulas above |
 | Defense, dodge, parry, block | `UnitDefense`, `GetDodgeChance`, `GetParryChance`, `GetBlockChance` | Same |
 | Dual wielding | `IsDualWielding` | Same |
 
-**Hidden in combat on Forever:** the hit, crit, rating, expertise and stat functions are flagged `SecretWhenUnitStatsRestricted`, so Forever hides their values in combat. The addon reads them out of combat and keeps the last values it saw; `C_Secrets.ShouldUnitStatsBeSecret()` tells it when.
+**Hidden in combat on Forever:** the hit, crit, rating, expertise, glancing and stat functions are flagged `SecretWhenUnitStatsRestricted`, so Forever hides their values in combat. The addon reads them out of combat and keeps the last values it saw; `C_Secrets.ShouldUnitStatsBeSecret()` tells it when.
 
 **Not a Forever rule:** Forever's character-sheet code also contains fixed miss, dodge and parry tables under the comment "Hit and Expertise are being removed from items". The block is identical to the retail client's and dates from retail's removal of hit from gear.
 

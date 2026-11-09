@@ -93,7 +93,9 @@ end
 -- The estimates for one table, before the player's edits.
 -- c: rules, playerLevel, targetLevel, skill, hit, sheetCrit, agilityCrit,
 --    baseCrit, dodgeReduction, dualWield (bool), special (bool), behind (bool),
---    ranged (bool): bows, guns, crossbows and thrown weapons
+--    ranged (bool): bows, guns, crossbows and thrown weapons,
+--    gameGlancing (optional): function(skill, defense) returning the game's
+--    glancing chance and damage lost in percent, or nothing
 function Rules.Estimate(c)
 	local defense = c.targetLevel * 5
 	local gap = defense - c.skill
@@ -173,6 +175,14 @@ function Rules.Estimate(c)
 		why.glancing = { { "10% + 2% per point of defense above " .. capped, e.glancing } }
 	end
 	e.glancingLoss = Rules.GlancingLoss(gap)
+	-- Forever can say both numbers itself; use them when it does.
+	local gameChance, gameLoss
+	if c.gameGlancing then gameChance, gameLoss = c.gameGlancing(c.skill, defense) end
+	if gameChance and not c.ranged and not c.special then
+		e.glancing = Clamp(gameChance)
+		why.glancing = { { "From the game (skill " .. c.skill .. " vs defense " .. defense .. ")", e.glancing } }
+	end
+	if gameLoss then e.glancingLoss = math.min(math.max(gameLoss, 0), 100) end
 
 	-- Block: never above 5% (Measured)
 	if c.behind then

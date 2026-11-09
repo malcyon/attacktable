@@ -232,6 +232,7 @@ local function Compute()
 			dualWield = s.dualWield,
 			special = db.special,
 			behind = db.behind,
+			gameGlancing = Stats.GameGlancing,
 		})
 	end
 	local edits, values = Edits(), {}

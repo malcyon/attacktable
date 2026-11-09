@@ -90,13 +90,36 @@ end
 
 -- Crit from Agility: from the game if it can say, otherwise from Forever's table.
 local function AgilityCrit(class, level, agility)
+	-- A fraction (0.05 is 5%); Blizzard's character sheet multiplies it by 100.
 	local v = Call(GetCritChanceFromStat, 2, agility)
-	if v then return v, "game" end
+	if v then return v * 100, "game" end
 	v = Call(GetCritChanceFromAgility, "player")
 	if v then return v, "game" end
 	local per = ns.Rules.AgilityPerCrit(class, level)
 	if per then return agility / per, "table" end
 	return 0, "none"
+end
+
+-- Hit from gear's hit rating, which Forever's character sheet adds to the
+-- hit modifier (Camelot/PaperDollFrameStats.lua). Classic Era has no ratings.
+local function RatingHit(rating)
+	if not Stats.isForever or not rating then return 0 end
+	return Call(GetCombatRatingBonus, rating) or 0
+end
+
+-- Forever's own glancing chance and damage lost, in percent, for one weapon
+-- skill against one defense; Blizzard's skills window reads the same two
+-- functions (Camelot/SkillsFrame.lua). The game hides them in combat, so the
+-- last values read are kept. Returns nothing when the game can't say.
+local glancing = {}
+function Stats.GameGlancing(skill, defense)
+	if not Stats.isForever then return end
+	local key = skill .. ":" .. defense
+	local chance = Call(GetGlancingBlowChance, skill, defense)
+	local loss = Call(GetGlancingBlowPenalty, skill, defense)
+	if chance and loss then glancing[key] = { chance * 100, loss * 100 } end
+	local g = glancing[key]
+	if g then return g[1], g[2] end
 end
 
 local last
@@ -112,6 +135,7 @@ function Stats.Read()
 	local hidden = Stats.isForever and C_Secrets and Call(C_Secrets.ShouldUnitStatsBeSecret)
 	s.sheetCrit = Call(GetCritChance)
 	s.hit = Call(GetHitModifier)
+	local meleeRating = RatingHit(CR_HIT_MELEE)
 	local _, agility = Call(UnitStat, "player", 2)
 	if hidden or sawSecret then
 		if last then
@@ -121,8 +145,10 @@ function Stats.Read()
 		-- Nothing read yet: show the table with empty stats rather than nothing.
 		s.stale = true
 	end
-	s.sheetCrit, s.hit, agility = s.sheetCrit or 0, s.hit or 0, agility or 0
-	s.hitOff = Call(GetOffhandHitModifier) or s.hit
+	s.sheetCrit, agility = s.sheetCrit or 0, agility or 0
+	s.hit = (s.hit or 0) + meleeRating
+	local hitOff = Call(GetOffhandHitModifier)
+	s.hitOff = hitOff and (hitOff + meleeRating) or s.hit
 	s.agility = agility
 	s.agilityCrit, s.agilitySource = AgilityCrit(s.class, s.level, agility)
 	s.baseCrit = ns.Rules.BASE_CRIT[s.class] or 0
@@ -139,7 +165,8 @@ function Stats.Read()
 	if rangedID then rangedClass, rangedSub = ItemInfo(rangedID) end
 	s.hasRanged = rangedClass == WEAPON_CLASS and RANGED_SUBCLASS[rangedSub] or false
 	s.rangedCrit = Call(GetRangedCritChance) or s.sheetCrit
-	s.hitRanged = Call(GetRangedHitModifier) or s.hit
+	local hitRanged = Call(GetRangedHitModifier)
+	s.hitRanged = hitRanged and (hitRanged + RatingHit(CR_HIT_RANGED)) or s.hit
 	s.skillRanged, s.skillRangedGuessed = s.level * 5, true
 	if s.hasRanged then
 		local skill

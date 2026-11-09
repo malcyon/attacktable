@@ -1,5 +1,11 @@
 # Attack Table
 
+## Unreleased
+
+- WoW Forever: glancing chance and damage lost come from the game itself.
+- WoW Forever: hit rating from gear now counts toward hit.
+- Fixed: crit from Agility was read 100 times too small, so the boss view took crit off that bosses don't reduce.
+
 ## 1.4.0
 
 - First public release.

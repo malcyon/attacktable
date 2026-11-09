@@ -1,6 +1,6 @@
 # Attack Table
 
-A World of Warcraft addon that visualizes melee and ranged the attack table. It shows how much room is left for crits, and how much is pushed off the end when the table is full.
+A World of Warcraft addon that visualizes melee and ranged the attack table. It shows how much room is left for crits, and how much is pushed off the end when the table is full. I made this because I was curious how it works, and because I don't understand how people are just keeping this information in their heads.
 
 ![The Attack Table window, showing a monster's attacks on a character](media/screenshot.png)
 
@@ -12,7 +12,11 @@ A World of Warcraft addon that visualizes melee and ranged the attack table. It 
 - Edit the stats it uses to see how the table would change. 
 - Optionally enable combat logging anytime you login.
 
-## Games
+## AI Usage
+
+This addon was generated using Claude Code, with Opus 5.5.
+
+## Games Supported
 
 - WoW Forever
 - WoW Classic Era

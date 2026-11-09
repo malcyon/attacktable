@@ -21,8 +21,6 @@ This addon was generated using Claude Code, with Opus 5.5.
 - WoW Forever
 - WoW Classic Era
 
-Each game uses its own rules.
-
 ## Installing
 
 Copy the `.lua` and `.toc` files into `World of Warcraft/<game folder>/Interface/AddOns/AttackTable/`, then restart the game.

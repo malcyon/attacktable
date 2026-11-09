@@ -1,6 +1,6 @@
 # Attack Table
 
-## Unreleased
+## 1.4.1
 
 - WoW Forever: glancing chance and damage lost come from the game itself.
 - WoW Forever: hit rating from gear now counts toward hit.

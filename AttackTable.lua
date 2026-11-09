@@ -150,7 +150,11 @@ local function ResultTooltip(tip, key)
 		tip:AddLine(string.format("Each glancing blow loses about %.0f%% of its damage.", state.estimate.glancingLoss), 0.8, 0.8, 0.8, true)
 	end
 	if state.pushed[key] and state.pushed[key] > 0 then
-		tip:AddLine(string.format("%s does not fit and is pushed off the end.", Pct(state.pushed[key])), 0.84, 0.16, 0.16, true)
+		if Rules.LATE[key] then
+			tip:AddLine(string.format("%s does not fit and is pushed off the end.", Pct(state.pushed[key])), 0.84, 0.16, 0.16, true)
+		else
+			tip:AddLine(string.format("Only %s of %s fits: the results before it fill the rest of the roll.", Pct(slice.value), Pct(slice.value + state.pushed[key])), 0.84, 0.16, 0.16, true)
+		end
 	end
 	if key == "crit" then
 		if Ranged() then

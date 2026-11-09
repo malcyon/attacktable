@@ -1,0 +1,13 @@
+## Interface: 16001
+## Title: Attack Table
+## Notes: Draws your melee attack table as one colored bar, in the order the game rolls it. /attacktable
+## Author: Donald Morton
+## Version: 1.3.1
+## IconTexture: Interface\Icons\INV_Sword_04
+## AddonCompartmentFunc: AttackTable_OnAddonCompartmentClick
+## SavedVariables: AttackTableDB
+
+Rules.lua
+Stats.lua
+Log.lua
+AttackTable.lua

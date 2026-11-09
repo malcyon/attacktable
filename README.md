@@ -7,7 +7,7 @@ A World of Warcraft addon that visualizes the melee and ranged attack table. It 
 ## Features
 
 - Shows melee or ranged attacks.
-- Displays the table for your attacks or the data from when the monster is hitting you.
+- Displays the table for your attacks or from when the monster is hitting you.
 - Pick any monster level from 1 to 63.
 - Edit the stats it uses to see how the table would change. 
 - Optionally enable combat logging anytime you login.

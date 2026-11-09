@@ -4,7 +4,7 @@
 
 - WoW Forever: glancing chance and damage lost come from the game itself.
 - WoW Forever: hit rating from gear now counts toward hit.
-- Fixed: crit from Agility was read 100 times too small, so the boss view took crit off that bosses don't reduce.
+- Fixed: crit from Agility was read 100 times too small (in Classic Era it could also read as 0), so the boss view took crit off that bosses don't reduce.
 
 ## 1.4.0
 

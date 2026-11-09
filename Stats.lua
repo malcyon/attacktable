@@ -89,14 +89,27 @@ local function WeaponSkills(level)
 end
 
 -- Crit from Agility: from the game if it can say, otherwise from Forever's table.
+-- Forever's GetCritChanceFromStat gives a fraction (0.05 for 5%; Blizzard's
+-- character sheet multiplies it by 100). What Classic Era's functions give is
+-- not documented, so a value is read as a fraction or a percent, whichever is
+-- nearer the table; the two readings differ 100 times. A 0 with Agility above
+-- 0 means the game can't say.
 local function AgilityCrit(class, level, agility)
-	-- A fraction (0.05 is 5%); Blizzard's character sheet multiplies it by 100.
-	local v = Call(GetCritChanceFromStat, 2, agility)
-	if v then return v * 100, "game" end
-	v = Call(GetCritChanceFromAgility, "player")
-	if v then return v, "game" end
 	local per = ns.Rules.AgilityPerCrit(class, level)
-	if per then return agility / per, "table" end
+	local expected = per and agility / per
+	local function Percent(v, fraction)
+		if expected and expected > 0 then
+			local asFraction = math.abs(math.log(v * 100 / expected))
+			local asPercent = math.abs(math.log(v / expected))
+			return asFraction < asPercent and v * 100 or v
+		end
+		return fraction and v * 100 or v
+	end
+	local v = Call(GetCritChanceFromStat, 2, agility)
+	if v and v > 0 then return Percent(v, true), "game" end
+	v = Call(GetCritChanceFromAgility, "player")
+	if v and v > 0 then return Percent(v, false), "game" end
+	if expected then return expected, "table" end
 	return 0, "none"
 end
 

@@ -75,7 +75,9 @@ end
 
 -- Damage lost per glancing blow, from the defense-skill gap (Measured, Classic).
 function Rules.GlancingLoss(gap)
-	local low = math.min(1.3 - 0.05 * gap, 0.91)
+	-- The fitted formula goes below zero damage at very large gaps (weapon
+	-- skill far under the target's defense); a glance can't heal, so stop at 0.
+	local low = math.max(math.min(1.3 - 0.05 * gap, 0.91), 0)
 	local high = math.min(math.max(1.2 - 0.03 * gap, 0.2), 0.99)
 	return (1 - (low + high) / 2) * 100
 end

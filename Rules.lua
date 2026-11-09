@@ -12,12 +12,18 @@ Rules.FOREVER = {
 	hitSuppression = false, -- gone in Forever (Measured, gunba CORE-001)
 	dualWieldPenalty = 19, -- Forever's sheet code also uses 19 (Datamined)
 	lowLevelAvoidance = true, -- dodge, parry and block shrink below level 10 too (Measured)
+	-- Monsters do not crit you while their weapon skill is less than this far
+	-- above your defense (Measured: 0 crits in 2,063 landed swings, character
+	-- levels 1-13, monster levels 1-14). Above it the Classic formula is kept
+	-- (Not confirmed: 3 crits in 57 swings, 95% range 1.1-14.6%).
+	monsterCritGap = 10,
 }
 Rules.CLASSIC = {
 	name = "Classic Era",
 	hitSuppression = true, -- first 1% of hit wasted when defense is 11+ above skill (Blizzard)
 	dualWieldPenalty = 19, -- Measured
 	lowLevelAvoidance = false, -- the Classic sources give the level 10 rule for miss only
+	monsterCritGap = nil, -- Classic: 5% at the same level, from any gap
 }
 
 Rules.BOSS_AURA_CRIT = 1.8 -- extra crit reduction at +3 levels (Estimate; Measured in Forever)
@@ -202,8 +208,10 @@ end
 -- A monster's swing at you (the tank view). Formulas from Forever's character
 -- sheet code, Camelot/PaperDollFrameStats.lua (Datamined: Blizzard's model,
 -- not yet shown in game); the dodge, parry and block adjustment and the roll
--- order are the simulators' (Simulator). No measured test exists.
--- c: playerLevel, targetLevel, defense, dodge, parry, block (sheet values),
+-- order are the simulators' (Simulator). Forever logs at levels 1-14 fit the
+-- miss, dodge, parry, block and crushing numbers; monster crits did not, so
+-- Forever uses monsterCritGap (Measured).
+-- c: rules, playerLevel, targetLevel, defense, dodge, parry, block (sheet values),
 --    shieldBlock (bool), special (bool), behind (bool)
 Rules.SHIELD_BLOCK = 75
 
@@ -245,8 +253,15 @@ function Rules.EstimateDefense(c)
 		end
 	end
 
-	e.crit = Clamp(5 + gap * 0.04)
-	why.crit = Lines({ "Base crit", 5 }, { "Your defense " .. c.defense .. " vs its skill " .. skill, gap * 0.04 })
+	local critGap = c.rules and c.rules.monsterCritGap
+	if critGap and gap < critGap then
+		e.crit = 0
+		why.crit = { { "No crits while its skill is under " .. critGap .. " above your defense (gap " .. gap .. "; Measured)", 0 } }
+	else
+		e.crit = Clamp(5 + gap * 0.04)
+		why.crit = Lines({ "Base crit", 5 }, { "Your defense " .. c.defense .. " vs its skill " .. skill, gap * 0.04 },
+			critGap and { "Gap " .. gap .. ": Classic formula, Not confirmed in Forever", 0 } or false)
+	end
 
 	-- Crushing blows: white swings only; defense above your level x 5 does
 	-- not count; none unless its skill is 15 or more above your defense.

@@ -58,17 +58,17 @@ local NOTES = {
 	},
 	onYou = {
 		miss = { "Changes with: your defense, the monster's level.",
-			"From Blizzard's Forever character sheet code (Datamined; not yet shown in game). No measured test." },
+			"From Blizzard's Forever character sheet code (Datamined). Forever logs, levels 1-14, roughly fit (Measured)." },
 		dodge = { "Your dodge chance from the character sheet, lowered for a higher monster.",
 			"The lowering is the simulators' (Simulator); whether the sheet already counts it is Not confirmed." },
 		parry = { "Your parry chance from the character sheet, lowered for a higher monster. Only from the front.",
 			"The lowering is the simulators' (Simulator). Players and parry from behind: Not confirmed." },
 		block = { "Your block chance from the character sheet (needs a shield), lowered for a higher monster. Only from the front.",
 			"The lowering is the simulators' (Simulator). Shield Block adds 75% (Simulator)." },
-		crit = { "Changes with: your defense, the monster's level.",
-			"From Blizzard's Forever character sheet code (Datamined). No measured test." },
+		crit = { "Changes with: your defense, the monster's level. In Forever, none while the monster's skill is under 10 above your defense.",
+			"Forever logs (Measured, levels 1-14): 0 crits in 2,063 swings below that gap. Above it, the Classic 5% formula (Not confirmed: 3 in 57)." },
 		crushing = { "150% damage. Only from monsters 3+ levels above you; defense cannot lower it, only push it off the end.",
-			"From Blizzard's Forever character sheet code (Datamined); the roll order is the simulators'. No measured test." },
+			"From Blizzard's Forever character sheet code (Datamined); the roll order is the simulators'. Forever logs: 4 crushing blows where 6.9 were expected (Measured, few)." },
 		hit = { "Whatever is left of the roll." },
 	},
 }
@@ -200,6 +200,7 @@ local function Compute()
 	if OnYou() then
 		order = Rules.ORDER_ON_YOU
 		estimate, why = Rules.EstimateDefense({
+			rules = Stats.rules,
 			playerLevel = s.level,
 			targetLevel = TargetLevel(s),
 			defense = s.defense or s.level * 5,

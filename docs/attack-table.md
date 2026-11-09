@@ -297,6 +297,17 @@ Below level 10, monsters dodge, parry and block less, in step with their level, 
 
 The rule still held after the November 6 client update: every player's 937 white swings at monsters of logged level 1 to 9 in the first five later logs gave 22 misses, 19 dodges, 25 parries and 11 blocks, where the rule predicts 23 of each and a flat 5% 47. Blocks ran low, 11 against 23. In the later logs, one character's swings at monsters of levels 1–5 were dodged 0.5% of the time, against 4.8% without the rule and 1.4% with it. The rule stops at level 10.
 
+**Parry by level gap** (the November 4–6 logs, raw counts). These mostly follow the monster's own level, as above, rather than the gap:
+
+| Monster level compared with you | Shaman swings | Shaman parries | Warrior swings | Warrior parries |
+|---|---|---|---|---|
+| 1 lower | 130 | 1 | 244 | 4 |
+| Same | 221 | 9 | 225 | 7 |
+| 1 higher | 137 | 2 | 57 | 3 |
+| 2 higher | 133 | 14 | 25 | 0 |
+
+**Front or behind:** the log shows this for landed swings, from the attacker's and monster's positions and the monster's facing. It gives no positions for parries or other avoided swings, so those take theirs from the nearest landed swings. Where the swings on both sides put the attacker more than 120° off the monster's nose, 3 of 226 swings were parried, about what a monster's front gives at those levels. A looser count, using any landed swing within 2.5 seconds, finds 26 parries and 27 blocks in 2,090 swings from behind. Five logs from November 6 and 7 give a stronger hint: 5 parries where both neighbouring swings were from behind, against 51 landed swings there, when a monster's front would give about 2; the looser count finds 9 parries and 6 blocks in 459 swings. All of this fits Blizzard's bug report that monsters can parry and block from behind, but none of it pins down the moment of the parry (**Not confirmed**).
+
 **Damage lost per glance** fits the formula once monster armor is taken out (181 glances, the November 4–6 logs; armor removed with Classic's armor formula using each monster's logged armor):
 
 | Target defense minus weapon skill | Glances | Formula | Logged, corrected for armor |

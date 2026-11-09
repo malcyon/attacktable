@@ -307,7 +307,12 @@ function Rules.Build(v, order, special)
 		end
 	end
 	Add("hit", 100 - used)
+	-- Only the late results (crit, crushing) are "pushed off the end". An early
+	-- result that does not fit (glancing at weapon skill 1, say) just fills the
+	-- rest of the roll; counting it would draw a false crit overflow.
 	local total = 0
-	for _, p in pairs(pushed) do total = total + p end
+	for key, p in pairs(pushed) do
+		if Rules.LATE[key] then total = total + p end
+	end
 	return slices, room or 0, pushed, total
 end

@@ -7,7 +7,7 @@ An addon that draws your character's melee or ranged attack table as one colored
 | Part | Decision |
 |---|---|
 | Scope | Melee and ranged attacks only. Spells are out: a spell rolls hit, resistance and crit separately, so nothing is pushed off its table |
-| Opening it | `/attacktable`; a button somewhere later |
+| Opening it | `/attacktable`, a button on the minimap's edge (drag to move; `/attacktable minimap` hides it), or the minimap's addon compartment |
 | Whose table | Toggle at the top: "Your attacks" (you attacking a monster) or "Attacks on you" (a monster attacking you, for tanks); see below |
 | Tabs | Melee and Ranged on "Your attacks", shown only with a bow, gun, crossbow or thrown weapon equipped (wands are spells). On Ranged, White/Special and the hand buttons are hidden, since every ranged attack rolls crit the same way |
 | Combat log | Checkbox "Turn on combat logging at login", off by default, so the player never has to remember `/combatlog`; calls the game's `LoggingCombat(true)`, the same function `/combatlog` uses in both games. The logs are for agents to read; the addon itself cannot read them. Allowed by `AGENTS.md` |
@@ -20,7 +20,7 @@ An addon that draws your character's melee or ranged attack table as one colored
 | Editable values | Miss, dodge, parry, glancing, block and crit start as estimates and can be edited. An edited value is marked and has a reset button. Ordinary hit is whatever is left |
 | Bar | One colored slice per result, in roll order. Crit that does not fit is drawn past the end in striped red. Colors: miss grey, dodge yellow, parry orange, glancing light blue, block steel, crit red, hit green |
 | Table under the bar | One column of rows, like a real table: color, result, chance, range on the 0–100 roll, and a pencil on editable values. A "Room left" row sits between block and crit, and a "Crit pushed off" row at the bottom turns red when crit does not fit. A line below shows how crit was worked out. See `mockup.png` |
-| Tooltips | Each slice's chance, its range on the 0–100 roll, how it was worked out, what changes it, and how sure the number is |
+| Tooltips | Each slice's chance, its range on the 0–100 roll, how it was worked out, and what changes it. How sure each number is stays out of the window, by the player's choice (2026-11-09); it is recorded under [Evidence behind each number](#evidence-behind-each-number) |
 | Live updates | Redraws when gear, buffs, talents, level or weapon skill change, using the game's events rather than polling |
 | Games | Forever (`AttackTable.toc`, interface 16001) and Classic Era (`AttackTable_Vanilla.toc`, interface 11509), each with its own rules. Classic Era still has the 9% hit suppression against bosses; Forever does not |
 
@@ -44,7 +44,7 @@ The gap below is the monster's weapon skill (its level × 5) minus your defense.
 |---|---|---|
 | Miss | 5% − gap × 0.04% | Full defense counts |
 | Dodge, parry, block | Your own chance (`GetDodgeChance`, `GetParryChance`, `GetBlockChance`) − gap × 0.04% | The adjustment is the simulators' (**Simulator**); not in Blizzard's code |
-| Crit | 5% + gap × 0.04% | 5.6% from a level 63 boss at 300 defense |
+| Crit | Classic Era: 5% + gap × 0.04%. Forever: 0% while the gap is under 10; from 10 up, 5% + gap × 0.04% | 5.6% from a level 63 boss at 300 defense in Classic. Forever's cutoff is **Measured** at levels 1–14 (see [Forever log check](#forever-log-check-november-9-2026)); the formula above it is **Not confirmed** |
 | Crushing blow | gap × 2% − 15%, only when the gap is 15 or more; defense counts only up to your level × 5 | 15% from a boss at level 60, none from +2. Defense cannot lower it; only pushing it off the table can. lovelaced gives +2 monsters 5%; Blizzard's code (newer) gives 0 |
 
 **Controls:** the same target-level spin box, white/special toggle (special attacks never crush and roll crit separately, **Simulator**, lovelaced), and front/behind toggle. Whether players can parry or block attacks from behind is **Not confirmed** (lovelaced assumes dodge only). A "Shield Block active" checkbox adds 75% block to show the effect.
@@ -76,7 +76,10 @@ The result only matters below about 3% of counted crit; above that the reduction
 | 2 | The Ranged tab, following the majority of sources (no dodge, editable; crit a second roll) | Built 2026-10-29; not yet tested in game |
 
 Unbuilt parts sit behind a flag in `FEATURES` at the top of `AttackTable.lua`; while a flag is off, its buttons are left out of the window entirely. Both `attacksOnYou` and `ranged` are on.
-| Later | Ability dropdown, Classic Era swing counter, a button to open the window, a script under `tools/` that reads the combat logs and snapshots | Planned; the log script is `tools/combatlog/analyze.py` |
+| 1.1–1.3 | A button to open the window: on the character sheet (1.1, 1.2), then on the minimap's edge and in the addon compartment (1.3); a sword icon in the addon list | Minimap button built 2026-11-09 |
+| 1.3.1 | In Forever, monsters below level 10 dodge, parry and block less, in step with their level, as they already missed less | 2026-11-09 |
+| 1.4.0 | In Forever, monsters do not crit you while their skill is under 10 above your defense; evidence notes moved out of the window into this file | 2026-11-09 |
+| Later | Ability dropdown, Classic Era swing counter | Planned |
 
 ## Testing
 
@@ -143,11 +146,53 @@ All the redraw events in the plan exist in both games.
 
 **Not evidence:** Forever's character-sheet code contains fixed miss, dodge and parry tables under the comment "Hit and Expertise are being removed from items". The block is identical to the retail client's and dates from retail's removal of hit from gear, so it is not a Forever rule.
 
+
+## Forever log check (November 9, 2026)
+
+The addon's own formulas, run against 18 combat logs (November 6–9, builds 1.60.1.70840 and 70862) and 1,726 stat snapshots from five characters at levels 1–13, against monsters of levels 1–14 (**Measured**):
+
+| Check | Result |
+|---|---|
+| Your white swings (2,027) | Miss, glancing and crit fit: for example 3.5% miss against 3.2% predicted, 6.2% crit against 6.2% |
+| Dodge, parry and block on your swings | Below level 10, monsters dodged, parried and blocked much less than predicted (0.5% dodge against 4.8%); scaling them by monster level ÷ 10 fits. Fixed in 1.3.1 |
+| Monster swings at you (2,458) | Miss, dodge, parry, block and crushing fit |
+| Monster crits on you | None in 2,063 landed swings while the monster's skill was under 10 above your defense (95% range 0–0.18%); 3 in 57 from 10 up (95% range 1.1–14.6%). Every player in the logs: 19 crits in 18,811 landed monster swings, 0.10%. Fixed in 1.4.0 |
+
+No Blizzard post, simulator or fan site gives a Forever monster crit chance. Blizzard's [Deep Dive Panel Recap](https://news.blizzard.com/en-us/article/24303313/world-of-warcraft-forever-deep-dive-panel-recap) mentions tanks "immune to critical hits", so monsters can crit. The simulators assume the Classic 5% ([gunba `target.go`](https://github.com/gunba/wow-forever-sim/blob/forever/sim/core/target.go), [lovelaced `enemies.toml`](https://github.com/lovelaced/forever-sim/blob/main/data/base/enemies.toml)). The cutoff of 10 was chosen after looking at the data, so the true line may sit anywhere from about 5 to 15.
+
+## Evidence behind each number
+
+What the window's numbers rest on, kept here instead of in the tooltips. Marks: **Blizzard**, **Measured** (logged tests), **Datamined** (game files), **Simulator**, **Estimate**, **Not confirmed**.
+
+| View | Result | Evidence |
+|---|---|---|
+| Your attacks, melee | Miss | Measured in Classic; Forever's 8% boss miss and missing hit suppression are Measured. |
+| Your attacks, melee | Dodge | Measured in Classic. Expertise in Forever: Not confirmed. |
+| Your attacks, melee | Parry | Blizzard for 14% at +3; Measured at the same level; other levels Not confirmed. |
+| Your attacks, melee | Glancing | Measured in Classic. Forever's glancing damage against higher targets is a known bug. |
+| Your attacks, melee | Block | Measured in Classic. |
+| Your attacks, melee | Crit | Level reduction Measured; boss reduction an Estimate (1.8%), still present in Forever. |
+| Your attacks, ranged | Miss | The melee formulas with ranged skill (Not confirmed for ranged). Classic hit suppression applies; whether Forever removed it for ranged is Not confirmed. |
+| Your attacks, ranged | Dodge | Not confirmed: no measured ranged results found. |
+| Your attacks, ranged | Block | Simulator and the forever-hunter wiki; no measured ranged results. |
+| Your attacks, ranged | Crit | Boss reduction Measured on Auto Shot in Classic. Crit as a second roll: most sources (Not confirmed). |
+| Attacks on you | Miss | From Blizzard's Forever character sheet code (Datamined). Forever logs, levels 1-14, roughly fit (Measured). |
+| Attacks on you | Dodge | The lowering is the simulators' (Simulator); whether the sheet already counts it is Not confirmed. |
+| Attacks on you | Parry | The lowering is the simulators' (Simulator). Players and parry from behind: Not confirmed. |
+| Attacks on you | Block | The lowering is the simulators' (Simulator). Shield Block adds 75% (Simulator). |
+| Attacks on you | Crit | Forever logs (Measured, levels 1-14): 0 crits in 2,063 swings below that gap. Above it, the Classic 5% formula (Not confirmed: 3 in 57). |
+| Attacks on you | Crushing | From Blizzard's Forever character sheet code (Datamined); the roll order is the simulators'. Forever logs: 4 crushing blows where 6.9 were expected (Measured, few). |
+| Your attacks, melee | Dodge, parry, block below level 10 | Forever: they shrink with the monster's level, as miss does (**Measured**). Classic Era: miss only |
+| Your attacks, ranged | Crit as a second roll | Most sources (**Not confirmed**) |
+| Your attacks, special | Crit as a second roll | General Classic knowledge, not from the attack-table source |
+| Attacks on you | Parry and block from behind | None for players (**Not confirmed**; **Simulator**, lovelaced) |
+| Attacks on you | Monster abilities never crush; crit a second roll | **Simulator**, lovelaced |
+
 ## Still open
 
 - Whether monsters dodge ranged attacks, and whether Auto Shot can have crit pushed off.
 - Base crit and Agility-to-crit by level in Classic.
 - Whether Ruthless and Forever's gear crit rating count toward the 1.8%.
 - Whether `GetCritChanceFromAgility` exists on Classic Era.
-- The monster table has no measured test in Classic or Forever: roll order, crushing chance at +2, crit from defense above level × 5, and avoidance from behind.
+- The monster table in Forever: roll order, crushing chance at +2, avoidance from behind, and above all monster crit once your defense is 10 or more below the monster's skill (3 crits in 57 swings so far), against elites and bosses, and at level 60. Classic Era is untested.
 - Whether `GetDodgeChance` already includes defense above level × 5.

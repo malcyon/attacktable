@@ -31,44 +31,28 @@ local EDITED = { 0.55, 0.8, 1 }
 -- for your attacks; PLAN.md "Attacks on you" for the monster's).
 local NOTES = {
 	yours = {
-		miss = { "Changes with: your hit, weapon skill, target level, two weapons (white swings).",
-			"Measured in Classic; Forever's 8% boss miss and missing hit suppression are Measured." },
-		dodge = { "Changes with: weapon skill, target level, expertise. Happens from behind too.",
-			"Measured in Classic. Expertise in Forever: Not confirmed." },
-		parry = { "Changes with: target level. Only from the front.",
-			"Blizzard for 14% at +3; Measured at the same level; other levels Not confirmed." },
-		glancing = { "White swings only. Changes with: target level. Weapon skill above level x 5 changes the damage lost, not the chance.",
-			"Measured in Classic. Forever's glancing damage against higher targets is a known bug." },
-		block = { "Changes with: target level. Only from the front; never above 5%.",
-			"Measured in Classic." },
-		crit = { "Changes with: your crit, target level; at +3 the boss reduction.",
-			"Level reduction Measured; boss reduction an Estimate (1.8%), still present in Forever." },
+		miss = { "Changes with: your hit, weapon skill, target level, two weapons (white swings)." },
+		dodge = { "Changes with: weapon skill, target level, expertise. Happens from behind too." },
+		parry = { "Changes with: target level. Only from the front." },
+		glancing = { "White swings only. Changes with: target level. Weapon skill above level x 5 changes the damage lost, not the chance." },
+		block = { "Changes with: target level. Only from the front; never above 5%." },
+		crit = { "Changes with: your crit, target level; at +3 the boss reduction." },
 		hit = { "Whatever is left of the roll." },
 	},
 	ranged = {
-		miss = { "Changes with: your hit, ranged weapon skill, target level.",
-			"The melee formulas with ranged skill (Not confirmed for ranged). Classic hit suppression applies; whether Forever removed it for ranged is Not confirmed." },
-		dodge = { "Most sources say monsters cannot dodge ranged attacks; one simulator says Auto Shot can be dodged. Edit it if your logs show dodges.",
-			"Not confirmed: no measured ranged results found." },
-		block = { "Changes with: target level. Only from the front; never above 5%.",
-			"Simulator and the forever-hunter wiki; no measured ranged results." },
-		crit = { "Changes with: your ranged crit, target level; at +3 the boss reduction.",
-			"Boss reduction Measured on Auto Shot in Classic. Crit as a second roll: most sources (Not confirmed)." },
+		miss = { "Changes with: your hit, ranged weapon skill, target level." },
+		dodge = { "Monsters do not dodge ranged attacks. Edit it if you see dodges." },
+		block = { "Changes with: target level. Only from the front; never above 5%." },
+		crit = { "Changes with: your ranged crit, target level; at +3 the boss reduction." },
 		hit = { "Whatever is left of the roll." },
 	},
 	onYou = {
-		miss = { "Changes with: your defense, the monster's level.",
-			"From Blizzard's Forever character sheet code (Datamined). Forever logs, levels 1-14, roughly fit (Measured)." },
-		dodge = { "Your dodge chance from the character sheet, lowered for a higher monster.",
-			"The lowering is the simulators' (Simulator); whether the sheet already counts it is Not confirmed." },
-		parry = { "Your parry chance from the character sheet, lowered for a higher monster. Only from the front.",
-			"The lowering is the simulators' (Simulator). Players and parry from behind: Not confirmed." },
-		block = { "Your block chance from the character sheet (needs a shield), lowered for a higher monster. Only from the front.",
-			"The lowering is the simulators' (Simulator). Shield Block adds 75% (Simulator)." },
-		crit = { "Changes with: your defense, the monster's level. In Forever, none while the monster's skill is under 10 above your defense.",
-			"Forever logs (Measured, levels 1-14): 0 crits in 2,063 swings below that gap. Above it, the Classic 5% formula (Not confirmed: 3 in 57)." },
-		crushing = { "150% damage. Only from monsters 3+ levels above you; defense cannot lower it, only push it off the end.",
-			"From Blizzard's Forever character sheet code (Datamined); the roll order is the simulators'. Forever logs: 4 crushing blows where 6.9 were expected (Measured, few)." },
+		miss = { "Changes with: your defense, the monster's level." },
+		dodge = { "Your dodge chance from the character sheet, lowered for a higher monster." },
+		parry = { "Your parry chance from the character sheet, lowered for a higher monster. Only from the front." },
+		block = { "Your block chance from the character sheet (needs a shield), lowered for a higher monster. Only from the front." },
+		crit = { "Changes with: your defense, the monster's level. In Forever, none while the monster's skill is under 10 above your defense." },
+		crushing = { "150% damage. Only from monsters 3+ levels above you; defense cannot lower it, only push it off the end." },
 		hit = { "Whatever is left of the roll." },
 	},
 }
@@ -170,9 +154,9 @@ local function ResultTooltip(tip, key)
 	end
 	if key == "crit" then
 		if Ranged() then
-			tip:AddLine("Shots roll crit a second time on the shots that land, so crit is never pushed off (most sources; Not confirmed).", 0.8, 0.8, 0.8, true)
+			tip:AddLine("Shots roll crit a second time on the shots that land, so crit is never pushed off.", 0.8, 0.8, 0.8, true)
 		elseif db.special then
-			tip:AddLine("Abilities roll crit a second time on the attacks that land, so crit is never pushed off (Not from the source).", 0.8, 0.8, 0.8, true)
+			tip:AddLine("Abilities roll crit a second time on the attacks that land, so crit is never pushed off.", 0.8, 0.8, 0.8, true)
 		end
 		if not OnYou() and state.stats.agilitySource == "table" then
 			tip:AddLine("Crit from Agility worked out from Forever's Agility table; the game did not give it.", 0.6, 0.6, 0.6, true)
@@ -184,7 +168,6 @@ local function ResultTooltip(tip, key)
 	local note = NOTES[Mode()][key]
 	tip:AddLine(" ")
 	tip:AddLine(note[1], 1, 1, 1, true)
-	if note[2] then tip:AddLine(note[2], 0.6, 0.6, 0.6, true) end
 end
 
 local function TargetLevel(s)
@@ -552,7 +535,7 @@ local function Build()
 	frame.ranged:SetPoint("LEFT", frame.melee, "RIGHT", 6, 0)
 	Tooltip(frame.ranged, function(tip)
 		tip:AddLine("Ranged: your bow, gun, crossbow or thrown weapon", 1, 1, 1)
-		tip:AddLine("Most sources: no dodge, parry or glancing; block only from the front; crit is a second roll, so it is never pushed off. One simulator disagrees on dodge and crit for Auto Shot.", 0.8, 0.8, 0.8, true)
+		tip:AddLine("No dodge, parry or glancing; block only from the front; crit is a second roll, so it is never pushed off.", 0.8, 0.8, 0.8, true)
 	end)
 
 	frame.white = MakeButton(frame, "White", function() db.special = false; Refresh() end)
@@ -570,7 +553,7 @@ local function Build()
 	Tooltip(frame.special, function(tip)
 		if OnYou() then
 			tip:AddLine("Special: the monster's abilities", 1, 1, 1)
-			tip:AddLine("They never crush, and crit is a second roll on the hits (Simulator).", 0.8, 0.8, 0.8, true)
+			tip:AddLine("They never crush, and crit is a second roll on the hits.", 0.8, 0.8, 0.8, true)
 			return
 		end
 		tip:AddLine("Special: a typical weapon ability", 1, 1, 1)
@@ -619,7 +602,6 @@ local function Build()
 	Tooltip(frame.behind, function(tip)
 		if OnYou() then
 			tip:AddLine("The monster attacks your back: you can still dodge, but not parry or block.", 1, 1, 1, true)
-			tip:AddLine("For players this is Not confirmed (Simulator, lovelaced).", 0.6, 0.6, 0.6, true)
 		else
 			tip:AddLine("Monsters cannot parry or block from behind; they still dodge.", 1, 1, 1, true)
 			tip:AddLine("Forever beta bug: very close, they sometimes still parry and block.", 0.6, 0.6, 0.6, true)

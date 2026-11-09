@@ -134,7 +134,7 @@ function Rules.Estimate(c)
 	local dodge = (5 + gap * 0.1) * lowScale
 	if c.ranged then
 		e.dodge = 0
-		why.dodge = { { "No dodge against ranged attacks (most sources; one simulator disagrees)", 0 } }
+		why.dodge = { { "No dodge against ranged attacks", 0 } }
 	else
 		e.dodge = Clamp(dodge - c.dodgeReduction)
 		why.dodge = Lines(
@@ -240,8 +240,8 @@ function Rules.EstimateDefense(c)
 	Avoid("dodge", c.dodge, "dodge")
 	if c.behind then
 		e.parry, e.block = 0, 0
-		why.parry = { { "Attacked from behind: no parry (Not confirmed)", 0 } }
-		why.block = { { "Attacked from behind: no block (Not confirmed)", 0 } }
+		why.parry = { { "Attacked from behind: no parry", 0 } }
+		why.block = { { "Attacked from behind: no block", 0 } }
 	else
 		Avoid("parry", c.parry, "parry")
 		local block = c.block
@@ -256,18 +256,17 @@ function Rules.EstimateDefense(c)
 	local critGap = c.rules and c.rules.monsterCritGap
 	if critGap and gap < critGap then
 		e.crit = 0
-		why.crit = { { "No crits while its skill is under " .. critGap .. " above your defense (gap " .. gap .. "; Measured)", 0 } }
+		why.crit = { { "No crits while its skill is under " .. critGap .. " above your defense (gap " .. gap .. ")", 0 } }
 	else
 		e.crit = Clamp(5 + gap * 0.04)
-		why.crit = Lines({ "Base crit", 5 }, { "Your defense " .. c.defense .. " vs its skill " .. skill, gap * 0.04 },
-			critGap and { "Gap " .. gap .. ": Classic formula, Not confirmed in Forever", 0 } or false)
+		why.crit = Lines({ "Base crit", 5 }, { "Your defense " .. c.defense .. " vs its skill " .. skill, gap * 0.04 })
 	end
 
 	-- Crushing blows: white swings only; defense above your level x 5 does
 	-- not count; none unless its skill is 15 or more above your defense.
 	if c.special then
 		e.crushing = 0
-		why.crushing = { { "Monster abilities never crush (Simulator)", 0 } }
+		why.crushing = { { "Monster abilities never crush", 0 } }
 	else
 		local cg = skill - math.min(c.defense, c.playerLevel * 5)
 		e.crushing = cg >= 15 and Clamp(cg * 2 - 15) or 0

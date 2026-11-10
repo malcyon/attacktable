@@ -254,6 +254,7 @@ The author's own combat logs from WoW Forever, written by the game with `/combat
 |---|---|---|
 | November 4–6, 2026 (13 logs) | 1.60.1.70790 | Two characters with one weapon, levels 1–8: 1,366 white swings at monsters of known level. Every player in view: 27,155 white swings at monsters |
 | November 6–9, 2026 (18 logs) | 1.60.1.70840 and 70862 | Five characters at levels 1–13: 2,027 white swings at monsters and 2,458 monster white swings at them. Every player in view: 18,811 landed monster swings at players |
+| November 6–10, 2026 (25 logs, the 18 above plus seven more) | 1.60.1.70840, 70862 and 70888 (the November 10 client) | 3,475 monster white swings of known level at the five characters, used in [By defense gap](#by-defense-gap) |
 
 #### Your swings
 
@@ -337,6 +338,22 @@ Crits do happen once your defense falls well behind: 3 in 57 swings, mostly on a
 
 Blizzard confirms that monsters can crit in Forever: the [Deep Dive Panel Recap](https://news.blizzard.com/en-us/article/24303313/world-of-warcraft-forever-deep-dive-panel-recap) redesigns Reckoning "to work for tanks who are immune to critical hits", and the [October 8 development notes](https://us.forums.blizzard.com/en/wow/t/2360696/5) fix Rage "from taking critical strikes or crushing blows" (**Blizzard**). No Blizzard post, simulator or fan site gives a Forever chance; a search on November 9, 2026 found none.
 
+#### By defense gap
+
+The same question with all 25 logs, through build 70888, and the gap worked out per swing: the monster's level × 5 minus the character's defense from the latest snapshot, counting defense only up to level × 5 as the crushing rule does. "Predicted" uses the formulas in [Monsters' attacks on you](#monsters-attacks-on-you) at each row's average gap.
+
+| Gap | Swings | Crushing blows | Predicted | Crits | Classic predicts |
+|---|---|---|---|---|---|
+| Under 5 | 3,052 | 0 | 0 | 0 | 145 |
+| 5 to 9 | 300 | 0 | 0 | 0 | 16 |
+| 10 to 14 | 75 | 0 | 0 | 1 | 4 |
+| 15 to 19 | 21 | 0 | 4 | 0 | 1 |
+| 20 to 24 | 11 | 4 | 3 | 2 | 0.6 |
+| 25 and up | 16 | 9 | 7 | 0 | 1 |
+
+- **Crits:** none in 3,352 swings with a gap under 10, now including 444 swings on build 70888, so the November 10 client did not change this. The three crits above 10 are the ones in the table above, on a Mage whose defense lagged.
+- **Crushing blows** fit the formula from a gap of 20 up: 13 where about 10 were predicted. Nine of them came on November 10 from one Great Goretusk (level 17) against a level 13 Warrior with 57 defense, a gap of 28: 9 crushing blows in its 15 landed swings, at about 1.4 times the damage of its plain hits (30 against 21 on average). None came at a gap of 15 to 19, where about 4 were predicted; at the formula's 19% that would happen about once in 80 tries, so the threshold may sit above 15 in Forever, but 21 swings cannot settle it.
+
 ## What WoW Forever changes
 
 | Topic | Forever | Mark |
@@ -377,6 +394,7 @@ From Blizzard's interface code in [Gethe/wow-ui-source](https://github.com/Gethe
 ## Still open
 
 - Monster crits on you at level 60, from elites and bosses, and how they rise once your defense falls behind.
+- Where crushing blows start: none at a gap of 15 to 19 in 21 swings, where Classic's formula expects about 4.
 - Whether monsters dodge ranged attacks, and whether Auto Shot's crit can be pushed off. A logged hunter would settle both.
 - The table at level 60 against a level 63 boss in Forever, and glancing damage after Blizzard's fix.
 - Whether abilities still use a separate crit roll in Forever.

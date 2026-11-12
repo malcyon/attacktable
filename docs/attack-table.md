@@ -193,7 +193,7 @@ Abilities such as Heroic Strike, Mortal Strike, Bloodthirst, Sinister Strike and
 - The dual-wield miss penalty doesn't apply, so their miss chance is the one-weapon one.
 - Miss, dodge, parry and block are rolled first. A second, separate roll then decides whether a hit crits, so abilities have no crit cap. The addon shows their crit as a share of the hits.
 
-Some abilities break these rules: some can't be dodged, parried or blocked (Overpower in Classic); spells cast by melee classes (shocks, Flametongue, Judgement) use the spell table instead; extra automatic swings (Windfury, Sword Specialization) use the white table.
+Some abilities break these rules: some can't be dodged, parried or blocked (Overpower in Classic); spells cast by melee classes (shocks, Flametongue, and Judgement in Classic) use the spell table instead; in Forever, Judgement counts as a ranged attack since November 11, using the ranged hit chance and no longer triggering effects that need a melee attack (**Blizzard**, [hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026)); extra automatic swings (Windfury, Sword Specialization) use the white table.
 
 ## Ranged attacks
 
@@ -362,6 +362,7 @@ The same question with all 25 logs, through build 70888, and the gap worked out 
 | Monsters below level 10 | Miss, dodge, parry and block all scale with monster level ÷ 10 | **Measured**, [Forever logs](#monsters-below-level-10) |
 | Monster crits on you | Almost none at levels 1–14 while your defense keeps up | **Measured**, [Forever logs](#monsters-rarely-crit) |
 | Hit suppression | Gone: every point of hit counts; the one-weapon boss hit cap is 8% | **Measured**, 4,259 attacks, same summary |
+| Paladin Judgement | A ranged attack, using the ranged hit chance, since November 11; in Classic it is rolled as a spell. Whether it can be dodged, parried, blocked or crit like a ranged attack is untested | **Blizzard**, [November 11 hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026) |
 | Crit suppression against +3 | Still there | **Measured**, same summary |
 | Glancing damage | Damage lost per glance against higher-level targets is a known bug; about 24.6% at +3 | **Blizzard**, [known issues](https://us.forums.blizzard.com/en/wow/t/2352687); **Measured**, same summary |
 | Parry and block from behind | Monsters can parry and block from behind at very close range, a bug | **Blizzard**, [known issues, October 1](https://us.forums.blizzard.com/en/wow/t/2352687/6) |

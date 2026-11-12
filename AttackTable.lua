@@ -566,7 +566,11 @@ local function Build()
 		tip:AddLine(" ")
 		tip:AddLine("Exceptions:", 1, 0.82, 0)
 		tip:AddLine("Some abilities cannot be dodged, parried or blocked (Overpower in Classic).", 0.8, 0.8, 0.8, true)
-		tip:AddLine("Shocks, Flametongue and Judgement are spells: not shown here.", 0.8, 0.8, 0.8, true)
+		if Stats.isForever then
+			tip:AddLine("Shocks and Flametongue are spells: not shown here. Judgement is a ranged attack and uses your ranged hit.", 0.8, 0.8, 0.8, true)
+		else
+			tip:AddLine("Shocks, Flametongue and Judgement are spells: not shown here.", 0.8, 0.8, 0.8, true)
+		end
 		tip:AddLine("Windfury and Sword Specialization swings are white swings.", 0.8, 0.8, 0.8, true)
 		tip:AddLine("Shots belong on the Ranged tab.", 0.8, 0.8, 0.8, true)
 	end)

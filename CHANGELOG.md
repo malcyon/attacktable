@@ -1,5 +1,9 @@
 # Attack Table
 
+## Unreleased
+
+- WoW Forever: the Special tooltip says Judgement is a ranged attack that uses your ranged hit, after Blizzard's November 11 hotfix. Classic Era still lists it as a spell.
+
 ## 1.4.1
 
 - WoW Forever: glancing chance and damage lost come from the game itself.

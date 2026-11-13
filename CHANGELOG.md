@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- WoW Forever: monsters crit you 0.2% of the time while your defense keeps up, and 2% once their weapon skill is 10 or more above your defense. Before, it showed 0% and Classic's 5% and up. Level 63 raid bosses still use Classic's formula.
 - WoW Forever: the Special tooltip says Judgement is a ranged attack that uses your ranged hit, after Blizzard's November 11 hotfix. Classic Era still lists it as a spell.
 
 ## 1.4.1

@@ -12,18 +12,21 @@ Rules.FOREVER = {
 	hitSuppression = false, -- gone in Forever (Measured, gunba CORE-001)
 	dualWieldPenalty = 19, -- Forever's sheet code also uses 19 (Datamined)
 	lowLevelAvoidance = true, -- dodge, parry and block shrink below level 10 too (Measured)
-	-- Monsters do not crit you while their weapon skill is less than this far
-	-- above your defense (Measured: 0 crits in 2,063 landed swings, character
-	-- levels 1-13, monster levels 1-14). Above it the Classic formula is kept
-	-- (Not confirmed: 3 crits in 57 swings, 95% range 1.1-14.6%).
-	monsterCritGap = 10,
+	-- Monster crit chance on you (Measured). Under a gap of 10 between its
+	-- skill and your defense: 11 crits in 6,734 landed swings in the author's
+	-- logs (0.16%, character levels 1-17), and 12 in 6,907 in public Warcraft
+	-- Logs dungeon runs up to Dire Maul (0.17%). From 10 up: 5 in 259 swings
+	-- (1.9%, 95% range 0.6-4.5%). The lower of this and Classic's formula, so
+	-- defense can still make you crit immune (Not confirmed in Forever).
+	-- Level 63 raid bosses keep Classic's formula until they are measured.
+	monsterCrit = { gap = 10, below = 0.2, above = 2, classicFromLevel = 63 },
 }
 Rules.CLASSIC = {
 	name = "Classic Era",
 	hitSuppression = true, -- first 1% of hit wasted when defense is 11+ above skill (Blizzard)
 	dualWieldPenalty = 19, -- Measured
 	lowLevelAvoidance = false, -- the Classic sources give the level 10 rule for miss only
-	monsterCritGap = nil, -- Classic: 5% at the same level, from any gap
+	monsterCrit = nil, -- Classic: 5% at the same level, 0.04% per point of gap
 }
 
 Rules.BOSS_AURA_CRIT = 1.8 -- extra crit reduction at +3 levels (Estimate; Measured in Forever)
@@ -222,7 +225,7 @@ end
 -- not yet shown in game); the dodge, parry and block adjustment and the roll
 -- order are the simulators' (Simulator). Forever logs at levels 1-14 fit the
 -- miss, dodge, parry, block and crushing numbers; monster crits did not, so
--- Forever uses monsterCritGap (Measured).
+-- Forever uses monsterCrit (Measured).
 -- c: rules, playerLevel, targetLevel, defense, dodge, parry, block (sheet values),
 --    shieldBlock (bool), special (bool), behind (bool)
 Rules.SHIELD_BLOCK = 75
@@ -265,12 +268,20 @@ function Rules.EstimateDefense(c)
 		end
 	end
 
-	local critGap = c.rules and c.rules.monsterCritGap
-	if critGap and gap < critGap then
-		e.crit = 0
-		why.crit = { { "No crits while its skill is under " .. critGap .. " above your defense (gap " .. gap .. ")", 0 } }
+	local mc = c.rules and c.rules.monsterCrit
+	local classic = Clamp(5 + gap * 0.04)
+	if mc and c.targetLevel < mc.classicFromLevel then
+		local rate = gap < mc.gap and mc.below or mc.above
+		e.crit = math.min(rate, classic)
+		if e.crit < rate then
+			why.crit = { { "Your defense " .. c.defense .. " is high enough to lower it (gap " .. gap .. ")", e.crit } }
+		elseif gap < mc.gap then
+			why.crit = { { "Forever: its skill is under " .. mc.gap .. " above your defense (gap " .. gap .. ")", e.crit } }
+		else
+			why.crit = { { "Forever: its skill is " .. mc.gap .. " or more above your defense (gap " .. gap .. ")", e.crit } }
+		end
 	else
-		e.crit = Clamp(5 + gap * 0.04)
+		e.crit = classic
 		why.crit = Lines({ "Base crit", 5 }, { "Your defense " .. c.defense .. " vs its skill " .. skill, gap * 0.04 })
 	end
 

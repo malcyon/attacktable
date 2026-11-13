@@ -51,7 +51,7 @@ local NOTES = {
 		dodge = { "Your dodge chance from the character sheet, lowered for a higher monster." },
 		parry = { "Your parry chance from the character sheet, lowered for a higher monster. Only from the front." },
 		block = { "Your block chance from the character sheet (needs a shield), lowered for a higher monster. Only from the front." },
-		crit = { "Changes with: your defense, the monster's level. In Forever, none while the monster's skill is under 10 above your defense." },
+		crit = { "Changes with: your defense, the monster's level. In Forever, much lower than in Classic, except from level 63 raid bosses." },
 		crushing = { "150% damage. Only when the monster's skill is 15 or more above your defense; defense above your level x 5 does not lower it, but other results can push it off the end." },
 		hit = { "Whatever is left of the roll." },
 	},

@@ -382,6 +382,41 @@ Every player in view shows the same rise: 22 crits in 21,002 landed monster swin
 
 Blizzard confirms that monsters can crit in Forever: the [Deep Dive Panel Recap](https://news.blizzard.com/en-us/article/24303313/world-of-warcraft-forever-deep-dive-panel-recap) redesigns Reckoning "to work for tanks who are immune to critical hits", and the [October 8 development notes](https://us.forums.blizzard.com/en/wow/t/2360696/5) fix Rage "from taking critical strikes or crushing blows" (**Blizzard**). No Blizzard post, simulator or fan site gives a Forever chance; a search on November 9, 2026 found none.
 
+## What rare monster crits mean in play
+
+What follows from the [measured crit rates](#monsters-rarely-crit) for monsters below level 63. The numbers are worked out from the formulas and measurements above; none of the advice has been tested in play (**Not confirmed**).
+
+**Steadier damage, not much less of it.** A crit does double damage, so Classic's 5% crits add about 5% to the damage a monster's swings do. In Forever, that drops to about 0.2% while your defense keeps up. The bigger change is in spikes: two crits in a row, which could take half a tank's health in Classic, almost never happen.
+
+**Defense is worth less while leveling.** In Classic, much of defense's value was pushing crits off the table, which is why tanks aimed for 440 defense against raid bosses. Below level 63 in Forever, crits are already near zero, so a point of defense above your level × 5 adds only its 0.04% each to miss, dodge, parry and block. Stamina, armor and dodge or parry gear give more. Level 63 bosses are untested and the raids open December 9, so keep defense gear until someone measures them.
+
+**Keep your defense skill trained.** The crit rate jumps from about 0.2% to about 2% once the gap reaches 10. That happens:
+
+- against monsters 2 or more levels above you; or
+- when your defense skill falls behind your level. It rises only when monsters hit you, so it lags on characters who level mostly at range or by healing.
+
+At 2%, it is still well under Classic's 5.4% from a +2 monster.
+
+**Crushing blows are now the main spike.** Monsters 3 or more levels above you still land crushing blows (150% damage) 15% of the time or more, as in Classic, and defense above your level × 5 does not lower them. Against +3 elites, crushing blows matter more than crits.
+
+| Where | What it allows |
+|---|---|
+| Dungeons | Bigger pulls. With fewer spikes, healers can rely on slower, larger, more efficient heals and top tanks off less |
+| Dungeons | Running a dungeon 1 or 2 levels above you is safer than in Classic. At 3 or more above, crushing blows return |
+| Open world | Classes that fight in melee range without a shield (Rogues, feral Druids, Enhancement Shamans, Retribution Paladins) take fewer spikes, so pulling two or three monsters, or fighting an elite 1 or 2 levels up, carries less risk |
+
+**Talents that trigger when you are crit** rarely do. From Forever's talent tables ([wago.tools](https://wago.tools/db2/TraitNode?build=1.60.1.70888), build 70888; **Datamined**):
+
+| Talent | Class | Trigger | What happens now |
+|---|---|---|---|
+| Blood Craze | Warrior (Fury) | Being crit, or one hit of more than 20% of your health | Rarely procs. A player on a Forever Discord watched their combat log for 2 hours and saw it never proc (**Not confirmed**: one player's report) |
+| Reckoning | Paladin (Protection) | Being crit (20 to 100%), or blocking (8 to 40%) | The block trigger does nearly all the work |
+| Martyrdom | Priest (Discipline) | Being crit by a melee or ranged attack | Almost never procs from monster melee |
+
+Warrior Enrage (any damaging attack) and Paladin Redoubt (any melee attack) do not need crits and are unaffected.
+
+**Not covered** by the measurements: level 63 raid bosses, monster spell crits (only melee swings were counted), and crits on hunter and warlock pets.
+
 ## What WoW Forever changes
 
 | Topic | Forever | Mark |
@@ -425,6 +460,7 @@ From Blizzard's interface code in [Gethe/wow-ui-source](https://github.com/Gethe
 - Monster crits on you from level 63 raid bosses, and whether enough defense still makes you crit immune.
 - Where crushing blows start: 2 at a gap of 15 to 19 in 31 swings, where Classic's formula expects about 6.
 - Whether build 70888 or higher character levels brought the first monster crits under a gap of 10.
+- Whether monster spells crit at the low Forever rate, and whether monsters crit pets at it.
 - Whether monsters dodge ranged attacks, and whether Auto Shot's crit can be pushed off. A logged hunter would settle both.
 - The table at level 60 against a level 63 boss in Forever, and glancing damage after Blizzard's fix.
 - Whether abilities still use a separate crit roll in Forever.

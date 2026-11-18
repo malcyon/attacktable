@@ -193,7 +193,7 @@ Abilities such as Heroic Strike, Mortal Strike, Bloodthirst, Sinister Strike and
 - The dual-wield miss penalty doesn't apply, so their miss chance is the one-weapon one.
 - Miss, dodge, parry and block are rolled first. A second, separate roll then decides whether a hit crits, so abilities have no crit cap. The addon shows their crit as a share of the hits.
 
-Some abilities break these rules: some can't be dodged, parried or blocked (Overpower in Classic); spells cast by melee classes (shocks, Flametongue, and Judgement in Classic) use the spell table instead; in Forever, Judgement counts as a ranged attack since November 11, using the ranged hit chance and no longer triggering effects that need a melee attack (**Blizzard**, [hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026)); extra automatic swings (Windfury, Sword Specialization) use the white table.
+Some abilities break these rules: some can't be dodged, parried or blocked (Overpower in Classic); spells cast by melee classes (shocks, Flametongue, and in Classic every Judgement except Judgement of Command, a melee attack) use the spell table instead; in Forever, Judgement counts as a ranged attack since November 11, using the ranged hit chance and no longer triggering effects that need a melee attack, except Judgement of Command, a melee attack again since November 13 (**Blizzard**, [hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026)); extra automatic swings (Windfury, Sword Specialization) use the white table.
 
 ## Ranged attacks
 
@@ -426,6 +426,7 @@ Warrior Enrage (any damaging attack) and Paladin Redoubt (any melee attack) do n
 | Monster crits on you | About 0.2% while your defense keeps up, about 2% once it falls 10 or more behind, in dungeons up to level 60; Classic gives 5% and up. Raid bosses untested | **Measured**, [Forever logs](#monsters-rarely-crit) and [public dungeon logs](#public-dungeon-logs) |
 | Hit suppression | Gone: every point of hit counts; the one-weapon boss hit cap is 8% | **Measured**, 4,259 attacks, same summary |
 | Paladin Judgement | A ranged attack, using the ranged hit chance, since November 11; in Classic it is rolled as a spell. Whether it can be dodged, parried, blocked or crit like a ranged attack is untested | **Blizzard**, [November 11 hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026) |
+| Judgement of Command | A melee attack that triggers on-hit effects, since November 13; Blizzard says it was the one Judgement treated as melee in Classic, and every other Judgement stays ranged. Whether it uses the melee hit chance is untested | **Blizzard**, [November 13 hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026) |
 | Crit suppression against +3 | Still there | **Measured**, same summary |
 | Glancing damage | Damage lost per glance against higher-level targets is a known bug; about 24.6% at +3 | **Blizzard**, [known issues](https://us.forums.blizzard.com/en/wow/t/2352687); **Measured**, same summary |
 | Parry and block from behind | Monsters can parry and block from behind at very close range, a bug | **Blizzard**, [known issues, October 1](https://us.forums.blizzard.com/en/wow/t/2352687/6) |

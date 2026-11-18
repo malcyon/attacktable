@@ -222,8 +222,8 @@ Your **defense** is a skill, like weapon skill, that rises as monsters hit you. 
 | Miss | `5% - gap * 0.04%` | **Datamined**; fits the [Forever logs](#forever-logs) |
 | Dodge, parry, block | Your own chance from the character sheet, minus `0.04%` per point the monster's skill is above your level × 5 | **Simulator** for the adjustment, which is not in Blizzard's code; fits the Forever logs |
 | Crit, Classic | `5% + gap * 0.04%`; enough defense makes you immune (440 at level 60 against a +3 boss) | **Datamined**, the same formula; **Not confirmed** for Classic itself: community wikis (wowwiki and vanilla-wow fandom, "Critical strike" and "Defense"), sourcing unclear. Both Forever simulators assume it (**Simulator**: [gunba `target.go`](https://github.com/gunba/wow-forever-sim/blob/forever/sim/core/target.go), [lovelaced `enemies.toml`](https://github.com/lovelaced/forever-sim/blob/main/data/base/enemies.toml)) |
-| Crit, Forever | About 0.2% while the gap is under 10 (none at all before November 10); about 2% from 10 up, a third of the Classic formula. Never more than the Classic formula, so defense may still make you immune | **Measured** at character levels 1 to 17 and in public dungeon logs up to level 60 ([Public dungeon logs](#public-dungeon-logs)); **Not confirmed** for level 63 raid bosses, where the addon keeps the Classic formula. See [Monsters rarely crit](#monsters-rarely-crit) |
-| Crushing blow | `gap * 2% - 15%`, only when the gap is 15 or more; defense counts only up to your level × 5 | **Datamined**. 15% from a boss at level 60, none from +2; lovelaced's simulator gives +2 monsters 5% |
+| Crit, Forever | About 0.2% while the gap is under 10 (none at all before November 10); about 1 to 2% from 10 up, a fifth to a third of the Classic formula. Never more than the Classic formula, so defense may still make you immune | **Measured** at character levels 1 to 17 and in public dungeon logs up to level 60 ([Public dungeon logs](#public-dungeon-logs)); **Not confirmed** for level 63 raid bosses, where the addon keeps the Classic formula. See [Monsters rarely crit](#monsters-rarely-crit) |
+| Crushing blow | `gap * 2% - 15%`, only when the gap is 15 or more; defense counts only up to your level × 5 | **Datamined**, and **Measured** in [Forever logs](#monsters-rarely-crit): none below a gap of 15, 20 against 26.6 predicted from 15 to 19. 15% from a boss at level 60, none from +2; lovelaced's simulator gives +2 monsters 5% |
 
 **Abilities** never crush, and their crit is a second roll on the hits (**Simulator**, lovelaced). **From behind**, players are assumed to dodge but not parry or block (**Not confirmed**; lovelaced assumes it).
 
@@ -338,8 +338,20 @@ Forever's monsters crit far less often than Classic's formula, at every defense 
 | 20 to 24 | 11 | 2 | 0.6 | 4 | 3 |
 | 25 and up | 83 | 2 | 7 | 71 | Nearly every landed swing (81) |
 
+The 12 logs from November 13 to 17 (builds 70938 and 70959), monster levels up to 26 hitting the author's characters of levels 8 to 20, measured the same way:
+
+| Gap | Swings | Crits | Classic predicts | Crushing blows | Crushing predicted |
+|---|---|---|---|---|---|
+| Under 5 | 6,429 | 9 | 306 | 0 | 0 |
+| 5 to 9 | 648 | 3 | 34 | 0 | 0 |
+| 10 to 14 | 266 | 0 | 15 | 0 | 0 |
+| 15 to 19 | 113 | 1 | 6 | 18 | 21 |
+| 20 to 24 | 5 | 0 | 0.3 | 1 | 1.2 |
+| 25 and up | 52 | 0 | 3 | 17 | 21 |
+
 - **Under a gap of 10:** 11 crits in 6,734 landed swings, 0.16% (95% range 0.08% to 0.29%). At Classic's 5% there would be about 420. The crit flag is read correctly: players' own crits are 7% of their landed swings in the same logs, and crushing blows appear.
-- **From 10 up:** 5 crits in 259 swings, 1.9% (95% range 0.6% to 4.5%), where Classic predicts about 17. Fewer than 6 would happen about once in 1,200 tries at Classic's rate, so the Classic formula overstates crits here too, by about three times. The two crits at 25 and up came from level 36 and 38 monsters hitting a level 17 Warrior, a gap of 100 or more, where Classic gives over 9%.
+- **Under a gap of 10, November 13 to 17:** 12 crits in 5,053 landed swings, 0.24%, close to the earlier rate.
+- **From 10 up:** 5 crits in 259 swings, 1.9% (95% range 0.6% to 4.5%), where Classic predicts about 17. The November 13 to 17 logs add 1 crit in 290 landed swings, where Classic predicts about 24, so the two sets together give 6 in 549, 1.1% (95% range 0.4% to 2.4%). Fewer than 6 would happen about once in 1,200 tries at Classic's rate, so the Classic formula overstates crits here too, by about three times. The two crits at 25 and up came from level 36 and 38 monsters hitting a level 17 Warrior, a gap of 100 or more, where Classic gives over 9%.
 - **No hidden crits:** of 5,753 unflagged plain hits under a gap of 10, 27 do at least 1.8 times the monster's median hit, about what damage spread gives; 5% crits would add about 290.
 - **Crushing blows** fit the formula from a gap of 20 up. At 15 to 19 there were 2 where about 6 were predicted, so the threshold may sit above 15 in Forever, but 31 swings cannot settle it.
 
@@ -365,7 +377,8 @@ Other players' public reports on [Warcraft Logs Forever](https://forever.warcraf
 
 - **The same rate as the author's logs** (0.16% under a gap of 10), and no rise with level: Dire Maul, a dungeon for levels 55 to 60, had 1 crit in 547 swings. Classic would give over 340 crits across these runs. The runs include elite monsters and dungeon bosses.
 - **Most crits fell on tanks**, whose defense keeps up. Two players who weren't tanking in one Wetlands run were crit in 2 of 40 and 1 of 29 swings, which fits about 2% once defense falls behind.
-- **Not covered:** crushing blows (this view doesn't show them) and level 63 raid bosses, since Forever's raids open on December 9.
+- **Crushing blows start at a gap of 15, as in Classic.** None below 15 in either set; from 15 to 19, 20 against 26.6 predicted across both sets, and from 25 up, 17 against 20.6 in the later logs.
+- **Not covered:** level 63 raid bosses, since Forever's raids open on December 9.
 
 #### Crits under a gap of 10 since November 10
 
@@ -378,6 +391,9 @@ Through the morning of November 10 there were no crits at all under a gap of 10.
 | 70888 (November 10 to 12) | 1 to 11 | 662 | 0 | 0% |
 | 70888 | 12 to 17 | 3,406 | 9 | 0.26% (0.12% to 0.50%) |
 | 70938 (November 12) | 10 to 12 | 253 | 2 | 0.8% |
+| 70938 (November 13 to 17) | 8 to 11 | 229 | 0 | 0% |
+| 70938 (November 13 to 17) | 12 to 20 | 4,674 | 11 | 0.24% |
+| 70959 (November 17) | 12 to 19 | 150 | 1 | 0.7% |
 
 The crits came from monsters of levels 10 to 18 (Defias Pillagers and Highwaymen, a Fleshripper, a Slark, a Stonesplinter Trogg and others) on a Warrior, a Rogue and a Shaman, each at 1.3 to 3 times that monster's median hit. These logs cannot tell whether the new build or the higher character levels brought them: at 0.26%, 427 swings at levels 12 and 13 on the older build would show no crit 33% of the time. Either way, Forever's monster crit is not zero under a gap of 10, though it is still under a tenth of Classic's.
 
@@ -393,7 +409,7 @@ What follows from the [measured crit rates](#monsters-rarely-crit) for monsters 
 
 **Defense is worth less while leveling.** In Classic, much of defense's value was pushing crits off the table, which is why tanks aimed for 440 defense against raid bosses. Below level 63 in Forever, crits are already near zero, so a point of defense above your level × 5 adds only its 0.04% each to miss, dodge, parry and block. Stamina, armor and dodge or parry gear give more. Level 63 bosses are untested and the raids open December 9, so keep defense gear until someone measures them.
 
-**Keep your defense skill trained.** The crit rate jumps from about 0.2% to about 2% once the gap reaches 10. That happens:
+**Keep your defense skill trained.** The crit rate jumps from about 0.2% to about 1 to 2% once the gap reaches 10. That happens:
 
 - against monsters 2 or more levels above you; or
 - when your defense skill falls behind your level. It rises only when monsters hit you, so it lags on characters who level mostly at range or by healing.
@@ -426,7 +442,7 @@ Warrior Enrage (any damaging attack) and Paladin Redoubt (any melee attack) do n
 |---|---|---|
 | Table against +3 targets | 8% miss, 6.5% dodge, 14% parry, 40% glancing, 5% block in a 3,644-attack test: the same as Classic. Not at level 60 against a real boss | **Measured**, [gunba CORE-001](https://github.com/gunba/wow-forever-sim/blob/forever/docs/uncertainties.md#core-001) |
 | Monsters below level 10 | Miss, dodge, parry and block all scale with monster level ÷ 10 | **Measured**, [Forever logs](#monsters-below-level-10) |
-| Monster crits on you | About 0.2% while your defense keeps up, about 2% once it falls 10 or more behind, in dungeons up to level 60; Classic gives 5% and up. Raid bosses untested | **Measured**, [Forever logs](#monsters-rarely-crit) and [public dungeon logs](#public-dungeon-logs) |
+| Monster crits on you | About 0.2% while your defense keeps up, about 1 to 2% once it falls 10 or more behind, in dungeons up to level 60; Classic gives 5% and up. Raid bosses untested | **Measured**, [Forever logs](#monsters-rarely-crit) and [public dungeon logs](#public-dungeon-logs) |
 | Hit suppression | Gone: every point of hit counts; the one-weapon boss hit cap is 8% | **Measured**, 4,259 attacks, same summary |
 | Paladin Judgement | A ranged attack, using the ranged hit chance, since November 11; in Classic it is rolled as a spell. Whether it can be dodged, parried, blocked or crit like a ranged attack is untested | **Blizzard**, [November 11 hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026) |
 | Judgement of Command | A melee attack that triggers on-hit effects, since November 13; Blizzard says it was the one Judgement treated as melee in Classic, and every other Judgement stays ranged. Whether it uses the melee hit chance is untested | **Blizzard**, [November 13 hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-9-2026) |
@@ -463,7 +479,6 @@ From Blizzard's interface code in [Gethe/wow-ui-source](https://github.com/Gethe
 ## Still open
 
 - Monster crits on you from level 63 raid bosses, and whether enough defense still makes you crit immune.
-- Where crushing blows start: 2 at a gap of 15 to 19 in 31 swings, where Classic's formula expects about 6.
 - Whether build 70888 or higher character levels brought the first monster crits under a gap of 10.
 - Whether monster spells crit at the low Forever rate, and whether monsters crit pets at it.
 - Whether monsters dodge ranged attacks, and whether Auto Shot's crit can be pushed off. A logged hunter would settle both.

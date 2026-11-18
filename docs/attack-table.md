@@ -61,6 +61,8 @@ The formulas below use `TargetLevel*5` for the target's defense and `AttackerSki
 
 **Dual wielding** raises the boss miss chance to 27% (8% + 19%). One test needed 28% hit to reach 0 misses: 27% hit still missed 1.01% of 48,445 swings, and 28% hit missed none of 5,398 (**Measured**). An older theory, that dual wielding gives 80% of the normal chance plus 20%, was disproved by this test.
 
+**Forever keeps the +19%.** A dual-wielding Rogue at levels 13 to 19, with 0 to 2% hit, missed 2,151 of 9,187 white swings at monsters from 6 levels below to 3 above; Classic's rule, swing by swing, predicts 2,139 (**Measured**, [Forever logs](#forever-logs), November 13–17). Level 60 against a boss is untested.
+
 ## Dodge
 
 | Situation | Dodge chance | Mark |
@@ -255,23 +257,24 @@ The author's own combat logs from WoW Forever, written by the game with `/combat
 | November 4–6, 2026 (13 logs) | 1.60.1.70790 | Two characters with one weapon, levels 1–8: 1,366 white swings at monsters of known level. Every player in view: 27,155 white swings at monsters |
 | November 6–9, 2026 (18 logs) | 1.60.1.70840 and 70862 | Five characters at levels 1–13: 2,027 white swings at monsters and 2,458 monster white swings at them. Every player in view: 18,811 landed monster swings at players |
 | November 6–12, 2026 (36 logs, including the 18 above) | 1.60.1.70840, 70862, 70888 (the November 10 client) and 70938 (November 12) | Five characters at levels 1–17: 8,931 monster white swings of known level at them, used in [Monsters rarely crit](#monsters-rarely-crit). Every player in view: 35,165 landed monster swings at players |
+| November 13–17, 2026 (12 logs) | 1.60.1.70938 and 70959 (first seen November 17) | A dual-wielding Rogue at levels 13–19: 9,187 white swings at monsters of known level. A Warrior, a Shaman and a Priest with one weapon, levels 8–20: 2,480 white swings. Every player in view: 14,549 landed monster swings at players, 36 crits |
 
 #### Your swings
 
 Predicted values add up the formulas swing by swing, using the character's weapon skill at that moment.
 
-| Result | November 4–6, predicted | Logged | November 6–9, predicted | Logged |
-|---|---|---|---|---|
-| White swings | | 1,366 | | 2,027 |
-| Miss | 34.1 | 36 | 55.4 | 58 |
-| Dodge, with the below-level-10 rule | 38.9 | 34 | 63.2 | 56 |
-| Parry, with the same rule | 36.8 | 41 | 49.2 | 47 |
-| Block, with the same rule | 35.6 | 34 | 48.6 | 33 |
-| Glancing | 190.1 | 181 | 87.7 | 90 |
-| Crit | 66.3 | 69 | 149.7 | 165 |
-| Crit damage | 2× | 2.00× | | |
+| Result | November 4–6, predicted | Logged | November 6–9, predicted | Logged | November 13–17, one weapon, predicted | Logged |
+|---|---|---|---|---|---|---|
+| White swings | | 1,366 | | 2,027 | | 2,480 |
+| Miss | 34.1 | 36 | 55.4 | 58 | 113.0 | 100 |
+| Dodge, with the below-level-10 rule | 38.9 | 34 | 63.2 | 56 | 110.4 | 107 |
+| Parry, with the same rule | 36.8 | 41 | 49.2 | 47 | 124.0 | 114 |
+| Block, with the same rule | 35.6 | 34 | 48.6 | 33 | 106.0 | 87 |
+| Glancing | 190.1 | 181 | 87.7 | 90 | 158.2 | 118 |
+| Crit | 66.3 | 69 | 149.7 | 165 | 141.4 | 151 |
+| Crit damage | 2× | 2.00× | | | | |
 
-Everything fits except blocks in the later logs, 33 against 48.6, for a reason the logs do not show; blocks also ran low in the earlier logs from other players (below). Characters' weapon skill often lagged behind the most their level allowed, which is why glancing shows up even against lower-level monsters.
+Everything fits except blocks in the later logs, 33 against 48.6, for a reason the logs do not show; blocks also ran low in the earlier logs from other players (below), and again in the November 13–17 logs, 87 against 106. Those logs also show fewer glancing blows than the formula, 118 against 158 for the one-weapon characters and 745 against 940 for the dual-wielding Rogue, whose prediction uses the main hand's skill for both hands. The earlier logs matched the formula, and the cause is not known: snapshots taken at the start of a fight may lag the weapon skill gained during it. Characters' weapon skill often lagged behind the most their level allowed, which is why glancing shows up even against lower-level monsters.
 
 #### Monsters below level 10
 
@@ -434,6 +437,7 @@ Warrior Enrage (any damaging attack) and Paladin Redoubt (any melee attack) do n
 | Items with weapon skill | Give less per item; Edgemaster's Handguards reported at +1 instead of +7 | **Blizzard**, [Deep Dive Panel Recap](https://news.blizzard.com/en-us/article/24303313/world-of-warcraft-forever-deep-dive-panel-recap); **Not confirmed** for +1 ([Warcraft Tavern](https://www.warcrafttavern.com/forever/news/weapon-skills-in-world-of-warcraft-forever/)) |
 | Dodge and parry reduction | Some items reduce your chance to be dodged or parried; a flask's expertise aura removes 5% dodge | **Blizzard**, same recap; **Datamined**, [tzcnt README](https://github.com/tzcnt/WarriorSim/blob/master/data/forever/README.md) |
 | Dual wield | Queued Heroic Strike no longer raises off-hand hit; Furious Precision gives off-hand hit | **Blizzard**, [October 1 notes](https://eu.forums.blizzard.com/en/wow/t/631316/4) |
+| Dual-wield miss penalty | +19%, the same as Classic, at levels 13 to 19 | **Measured**, [Forever logs](#forever-logs) |
 | Crits in PvP | No longer have reduced efficacy; affects player targets only | **Blizzard**, [October 8 notes](https://eu.forums.blizzard.com/en/wow/t/631316/5) |
 | Ruthless crit | Unknown whether it counts as aura crit | **Not confirmed**: untested |
 
@@ -464,6 +468,7 @@ From Blizzard's interface code in [Gethe/wow-ui-source](https://github.com/Gethe
 - Whether monster spells crit at the low Forever rate, and whether monsters crit pets at it.
 - Whether monsters dodge ranged attacks, and whether Auto Shot's crit can be pushed off. A logged hunter would settle both.
 - The table at level 60 against a level 63 boss in Forever, and glancing damage after Blizzard's fix.
+- Why glancing blows ran about a quarter below the formula in the November 13–17 logs, after matching it earlier.
 - Whether abilities still use a separate crit roll in Forever.
 - Whether Ruthless and Forever's crit rating on gear count toward the 1.8%.
 - Whether `GetDodgeChance` already includes defense above level × 5.

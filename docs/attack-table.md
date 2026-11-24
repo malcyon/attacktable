@@ -259,6 +259,7 @@ The author's own combat logs from WoW Forever, written by the game with `/combat
 | November 6–12, 2026 (36 logs, including the 18 above) | 1.60.1.70840, 70862, 70888 (the November 10 client) and 70938 (November 12) | Five characters at levels 1–17: 8,931 monster white swings of known level at them, used in [Monsters rarely crit](#monsters-rarely-crit). Every player in view: 35,165 landed monster swings at players |
 | November 13–17, 2026 (12 logs) | 1.60.1.70938 and 70959 (first seen November 17) | A dual-wielding Rogue at levels 13–19: 9,187 white swings at monsters of known level. A Warrior, a Shaman and a Priest with one weapon, levels 8–20: 2,480 white swings. Every player in view: 14,549 landed monster swings at players, 36 crits |
 | November 18–22, 2026 (10 logs) | 1.60.1.70959 and 71037 (first seen November 20) | A Shaman and a Priest with one weapon, levels 13–18: 639 white swings at monsters of known level. Three characters at levels 13–18: 1,478 monster white swings of known level at them. Every player in view: 19,836 landed monster swings at players, 44 crits |
+| November 22–23, 2026 (6 logs) | 1.60.1.71037 | A Shaman, a Warrior and a Mage, levels 16–23: 2,022 monster white swings of known level at them, monster levels 10 to 25. Every player in view: 7,151 landed monster swings at players, 28 crits |
 
 #### Your swings
 
@@ -361,9 +362,20 @@ The 10 logs from November 18 to 22 (builds 70959 and 71037), monster levels 9 to
 | 20 to 24 | 17 | 0 | 1 | 3 | 4.4 |
 | 25 and up | 24 | 0 | 1.5 | 15 | 12.5 |
 
+The 6 logs from November 22 and 23 (build 71037), monster levels 10 to 25 hitting a Shaman at levels 18 to 20, a Warrior at 21 to 23 and a Mage at 16 and 17, measured the same way. The Mage's last swings, from level 24 and 25 monsters, use a snapshot from an hour earlier at level 16; defense counts only up to level × 5 either way, so their gap is 45 or more:
+
+| Gap | Swings | Crits | Classic predicts | Crushing blows | Crushing predicted |
+|---|---|---|---|---|---|
+| Under 5 | 1,783 | 4 | 83 | 0 | 0 |
+| 5 to 9 | 98 | 1 | 5 | 0 | 0 |
+| 10 to 14 | 87 | 0 | 5 | 0 | 0 |
+| 15 to 19 | 42 | 0 | 2.4 | 6 | 7.5 |
+| 20 to 24 | 0 | 0 | 0 | 0 | 0 |
+| 25 and up | 12 | 0 | 0.8 | 4 | 9.1 |
+
 - **Under a gap of 10:** 11 crits in 6,734 landed swings, 0.16% (95% range 0.08% to 0.29%). At Classic's 5% there would be about 420. The crit flag is read correctly: players' own crits are 7% of their landed swings in the same logs, and crushing blows appear.
-- **Under a gap of 10, November 13 to 17:** 12 crits in 5,053 landed swings, 0.24%, close to the earlier rate. November 18 to 22: 2 crits in 929 landed swings, 0.22%, where Classic predicts about 54.
-- **From 10 up:** 5 crits in 259 swings, 1.9% (95% range 0.6% to 4.5%), where Classic predicts about 17. The November 13 to 17 logs add 1 crit in 290 landed swings, where Classic predicts about 24, so the two sets together give 6 in 549, 1.1% (95% range 0.4% to 2.4%). Fewer than 6 would happen about once in 1,200 tries at Classic's rate, so the Classic formula overstates crits here too, by about three times. The November 18 to 22 logs add 4 crits in 261 landed swings, 1.5%, where Classic predicts about 19, for 10 in 810 across all three sets, 1.2% (95% range 0.6% to 2.3%). The two crits at 25 and up came from level 36 and 38 monsters hitting a level 17 Warrior, a gap of 100 or more, where Classic gives over 9%.
+- **Under a gap of 10, November 13 to 17:** 12 crits in 5,053 landed swings, 0.24%, close to the earlier rate. November 18 to 22: 2 crits in 929 landed swings, 0.22%, where Classic predicts about 54. November 22 and 23: 5 crits in 1,582 landed swings, 0.32% (95% range 0.10% to 0.74%), where Classic predicts about 88. Across all four sets: 30 crits in 14,298 landed swings, 0.21% (95% range 0.14% to 0.30%).
+- **From 10 up:** 5 crits in 259 swings, 1.9% (95% range 0.6% to 4.5%), where Classic predicts about 17. The November 13 to 17 logs add 1 crit in 290 landed swings, where Classic predicts about 24, so the two sets together give 6 in 549, 1.1% (95% range 0.4% to 2.4%). Fewer than 6 would happen about once in 1,200 tries at Classic's rate, so the Classic formula overstates crits here too, by about three times. The November 18 to 22 logs add 4 crits in 261 landed swings, 1.5%, where Classic predicts about 19, for 10 in 810 across all three sets, 1.2% (95% range 0.6% to 2.3%). The November 22 and 23 logs add 0 crits in 135 landed swings, where Classic predicts about 8 (0 would happen about 3 times in 10,000 at Classic's rate), for 10 in 945 across all four sets, 1.1% (95% range 0.5% to 1.9%). The two crits at 25 and up came from level 36 and 38 monsters hitting a level 17 Warrior, a gap of 100 or more, where Classic gives over 9%.
 - **No hidden crits:** of 5,753 unflagged plain hits under a gap of 10, 27 do at least 1.8 times the monster's median hit, about what damage spread gives; 5% crits would add about 290.
 - **Crushing blows** fit the formula from a gap of 20 up. At 15 to 19 there were 2 where about 6 were predicted, so the threshold may sit above 15 in Forever, but 31 swings cannot settle it.
 
@@ -389,7 +401,7 @@ Other players' public reports on [Warcraft Logs Forever](https://forever.warcraf
 
 - **The same rate as the author's logs** (0.16% under a gap of 10), and no rise with level: Dire Maul, a dungeon for levels 55 to 60, had 1 crit in 547 swings. Classic would give over 340 crits across these runs. The runs include elite monsters and dungeon bosses.
 - **Most crits fell on tanks**, whose defense keeps up. Two players who weren't tanking in one Wetlands run were crit in 2 of 40 and 1 of 29 swings, which fits about 2% once defense falls behind.
-- **Crushing blows start at a gap of 15, as in Classic.** None below 15 in either set; from 15 to 19, 20 against 26.6 predicted across both sets, and from 25 up, 17 against 20.6 in the later logs. The November 18 to 22 logs again show none below 15 and fewer than predicted from 15 to 19 (21 against 28), so across all three sets that band has 41 against 55; from 20 up they give 18 against 17.
+- **Crushing blows start at a gap of 15, as in Classic.** None below 15 in either set; from 15 to 19, 20 against 26.6 predicted across both sets, and from 25 up, 17 against 20.6 in the later logs. The November 18 to 22 logs again show none below 15 and fewer than predicted from 15 to 19 (21 against 28), so across all three sets that band has 41 against 55; from 20 up they give 18 against 17. The November 22 and 23 logs show none below 15, 6 against 7.5 from 15 to 19 (47 against 62.5 across all four sets), and 4 against 9.1 from 25 up: a Mage 8 levels below level 24 and 25 monsters took 2 in 9 landed swings, where Classic gives about 80%. Nine swings from two kinds of monster cannot show whether crushing blows stop rising with the gap.
 - **Not covered:** level 63 raid bosses, since Forever's raids open on December 9.
 
 #### Crits under a gap of 10 since November 10
@@ -411,7 +423,7 @@ Through the morning of November 10 there were no crits at all under a gap of 10.
 
 The crits came from monsters of levels 10 to 18 (Defias Pillagers and Highwaymen, a Fleshripper, a Slark, a Stonesplinter Trogg and others) on a Warrior, a Rogue and a Shaman, each at 1.3 to 3 times that monster's median hit. These logs cannot tell whether the new build or the higher character levels brought them: at 0.26%, 427 swings at levels 12 and 13 on the older build would show no crit 33% of the time. Either way, Forever's monster crit is not zero under a gap of 10, though it is still under a tenth of Classic's.
 
-Every player in view shows the same rise: 22 crits in 21,002 landed monster swings before November 10 at midday (0.10%), 24 in 14,163 after (0.17%). The November 18 to 22 logs give 44 in 19,836 (0.22%).
+Every player in view shows the same rise: 22 crits in 21,002 landed monster swings before November 10 at midday (0.10%), 24 in 14,163 after (0.17%). The November 18 to 22 logs give 44 in 19,836 (0.22%), and the November 22 and 23 logs, with a raid group, 28 in 7,151 (0.39%). These counts mix tanks with players far below the monster, and the log gives no player's level, so the rise cannot be split by gap.
 
 Blizzard confirms that monsters can crit in Forever: the [Deep Dive Panel Recap](https://news.blizzard.com/en-us/article/24303313/world-of-warcraft-forever-deep-dive-panel-recap) redesigns Reckoning "to work for tanks who are immune to critical hits", and the [October 8 development notes](https://us.forums.blizzard.com/en/wow/t/2360696/5) fix Rage "from taking critical strikes or crushing blows" (**Blizzard**). No Blizzard post, simulator or fan site gives a Forever chance; a search on November 9, 2026 found none.
 
